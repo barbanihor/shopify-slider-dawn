@@ -104,6 +104,18 @@
     color: #515151ff;
   }
 
+  .slideshow__button-link {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    display: inline;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
   .slider-counter__link--dots .dot {
     width: 8px !important;
     height: 8px !important;
@@ -133,34 +145,70 @@
 
     if (!slider || !customDots.length) return;
 
+    const autoplay = slider.getAttribute('data-autoplay') === 'true';
+    const speed = parseInt(slider.getAttribute('data-speed')) || 5;
+    const totalSlides = customDots.length;
+
+    let currentSlideIndex = 0;
+    let autoplayTimer = null;
+
     function updateCustomDots() {
       const slideWidth = slider.clientWidth;
       const scrollLeft = slider.scrollLeft;
-      const currentSlide = Math.round(scrollLeft / slideWidth);
+      currentSlideIndex = Math.round(scrollLeft / slideWidth);
 
       customDots.forEach((dot, index) => {
-        dot.classList.toggle('slideshow__dot--active', index === currentSlide);
+        dot.classList.toggle('slideshow__dot--active', index === currentSlideIndex);
       });
     }
 
-    function handleDotClick(index) {
+    function goToSlide(index) {
       const slideWidth = slider.clientWidth;
+      currentSlideIndex = index;
       slider.scrollTo({
         left: slideWidth * index,
         behavior: 'smooth',
       });
     }
 
-    // Add click handlers to custom dots
+    function nextSlide() {
+      const nextIndex = (currentSlideIndex + 1) % totalSlides;
+      goToSlide(nextIndex);
+    }
+
+    function startAutoplay() {
+      if (autoplay && totalSlides > 1) {
+        autoplayTimer = setInterval(nextSlide, speed * 1000);
+      }
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    function restartAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
+
     customDots.forEach((dot, index) => {
-      dot.addEventListener('click', () => handleDotClick(index));
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        restartAutoplay();
+      });
     });
 
-    // Update dots on scroll
     slider.addEventListener('scroll', updateCustomDots);
 
-    // Initial update
+    slideshowComponent.addEventListener('mouseenter', stopAutoplay);
+    slideshowComponent.addEventListener('mouseleave', startAutoplay);
+
     updateCustomDots();
+
+    startAutoplay();
   });
 </script>
 
