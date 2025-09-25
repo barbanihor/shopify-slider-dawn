@@ -1,0 +1,37 @@
+.card__wishlist {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+
+.wishlist-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.wishlist-btn svg {
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn.active svg path {
+  fill: #e74c3c;
+  stroke: #e74c3c;
+}
+
+.wishlist-btn:hover svg {
+  transform: scale(1.1);
+}
