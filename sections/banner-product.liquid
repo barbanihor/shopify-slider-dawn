@@ -1,0 +1,44 @@
+{%- assign product = all_products[section.settings.product] -%}
+
+<div class="banner-product__container">
+  <div class="banner-product__gallery">
+    <div class="banner-product__variant-photos"></div>
+    <div class="banner-product__selected-photo"></div>
+  </div>
+
+  <div class="banner-product__form">
+    <h1 class="banner-product__title">{{ product.title }}</h1>
+    <div class="banner-product__price">{{ product.price | money }}</div>
+
+    <div class="banner-product__variants">
+      {%- for variant in product.variants -%}
+        <img
+          src="{{ variant.featured_image | image_url }}"
+          alt="{{ variant.featured_image.alt }}"
+          width="88"
+          height="88"
+        >
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner Product",
+  "tag": "section",
+  "class": "banner-product",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Product"
+    }
+  ]
+}
+{% endschema %}
