@@ -115,6 +115,22 @@
   },
   "products": {
     "product": {
+      "banner": {
+        "not_found": "Product not found",
+        "highly_rated": "Highly rated",
+        "select_size": "Select size",
+        "add_to_bag": "Add to bag",
+        "in_stock": "in stock",
+        "in_stock_all_sizes": "in stock (all sizes)",
+        "in_stock_count": "{{ count }}",
+        "available": "Available",
+        "unavailable": "Out of stock",
+        "badge": {
+          "shoes": "👟 Shoes",
+          "accessories": "👜 Accessories",
+          "clothing": "👕 Clothing"
+        }
+      },
       "add_to_cart": "Add to cart",
       "choose_options": "Choose options",
       "choose_product_options": "Choose options for {{ product_name }}",
